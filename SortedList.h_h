@@ -1,0 +1,82 @@
+// #ifndef _SORTED_LIST_H
+// #define _SORTED_LIST_H
+
+// // Assuming class T has:
+// // Copy constructor, Destructor, operator<,
+// #define T int
+
+
+// class SortedList
+// {
+// public:
+//     SortedList();
+//     SortedList(const SortedList& sorted_list) = default;
+//     ~SortedList() = default;
+
+//     //class Node;
+//     class Iterator;
+
+// private:
+//     int length;
+//     //Node first;
+//     //Node last;
+// };
+
+
+// SortedList::SortedList()
+// {
+//     length = 0;
+// }
+
+// // SortedList::~SortedList()
+// // {
+// // }
+
+// class SortedList::Iterator
+// {
+//     public:
+//         Iterator(const Iterator&) = default;
+//         ~Iterator() = default;
+//     private:
+//         int x;
+// }
+
+// // class SortedList::Node
+// // {
+// //     public:
+// //         Node(const Node& node) = default;
+// //         //Node& operator=(const Node& node);
+// //         ~Node() = default;
+// //         void setNext(Node* node);
+// //         //Node* getNext();
+// //         //T& getData();
+
+
+// //     private:
+// //         T data;
+// //         Node *next;    
+// // }
+
+// // SortedList::Node::Node(T in_data) : data(T(in_data))
+// // {
+// //     next = nullptr;
+// // }
+
+// // SortedList::Node::setNext(Node* node)
+// // {
+// //          this->next = node;
+// // }
+
+// // Node* getNext()
+// // {
+// //     return this->next;
+// // }
+
+// // T& getData()
+// // {
+// //     return (this->data); // returns REFERENCE to the data
+// // }
+
+
+
+// #endif
