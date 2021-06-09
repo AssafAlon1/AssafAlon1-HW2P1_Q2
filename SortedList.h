@@ -106,7 +106,7 @@ void SortedList::insert(T element)
 {
     Node new_node = Node(element);
 
-    // First element
+    // Case: List is currently empty
     if (size == 0)
     {
         first = &new_node;
@@ -114,13 +114,14 @@ void SortedList::insert(T element)
         return;
     }
 
+    // Case: New element should be placed first in list
     if (element < first->getData())
     {
         new_node.setNext(first);
         first = &new_node;
     }
 
-    // General case - new node should be placed somewhere in the middle
+    // Case: New element should be placed somewhere in the middle / end
     Node* prev_node = findPlacement(element);
     new_node.setNext(prev_node->getNext());
     prev_node->setNext(&new_node);
