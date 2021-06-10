@@ -79,4 +79,54 @@
 
 
 
+
+
+
+
+
+
+
+
+    // class SortedList::const_iterator
+    // {
+    // public:
+    //     const_iterator(const const_iterator& iterator) = default;
+    //     const_iterator& operator=(const const_iterator& iterator) = default;
+    //     ~const_iterator() = default;
+    //     const_iterator& operator++();
+    //     bool operator==(const_iterator iterator) const;
+    //     const const_iterator& operator*() const;
+
+    // private:
+    //     const SortedList::const_iterator
+
+    //     const_iterator(const Node* node);
+    //     //friend class SortedList;
+    // };
+
+    // SortedList::const_iterator::const_iterator(const SortedList::Node* node)
+    // {
+    //     current_node = node;
+    // }
+
+    // SortedList::const_iterator& SortedList::const_iterator::operator++()
+    // {
+    //     current_node = current_node->getNext();
+    //     return *this;
+    // }
+
+    // bool SortedList::const_iterator::operator==(const_iterator iterator) const
+    // {
+    //     //assert(SortedList == iterator.SortedList);
+    //     return current_node == iterator.current_node;
+    // }
+
+    // const const_iterator& operator*() const
+    // {
+    //    return
+    // }
+
+
+
+
 // #endif
