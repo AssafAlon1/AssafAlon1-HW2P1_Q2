@@ -1,5 +1,10 @@
 #include "SortedList.h"
 #include <assert.h>
+#include <iostream>
+
+using std::cout;
+using mtm::SortedList;
+
 
 // void nodeTests()
 // {
@@ -30,9 +35,26 @@
 //     assert(n1.getNext()->getNext()->getNext()->getNext()->getData() == 6);
 // }
 
+void listTest1()
+{
+    SortedList list1 = SortedList();
+    int x = list1.length();
+    cout << x;
+    list1.insert(1);
+    list1.insert(2);
+    list1.insert(3);
+    list1.insert(4);
+    list1.insert(5);
+    list1.insert(6);
+    list1.insert(7);
+    list1.insert(8);
+    list1.insert(9);
+    list1.insert(10);
+    mtm::printList(list1);
+}
+
 int main ()
 {
-    SortedList x();
-    
+    listTest1();
     return 0;
 }

@@ -1,0 +1,47 @@
+  //=========================================
+    //======== iterator implementation ========
+    //=========================================
+    class SortedList::Iterator
+    {
+    public:
+        Iterator(const SortedList* list);
+        Iterator(const Iterator& iterator) = default;
+        ~Iterator() = default;
+        Iterator& operator=(const Iterator& iterator) = default;
+        Iterator& operator++();
+        bool operator==(Iterator iterator) const;
+        const T& operator*();
+    private:
+        const SortedList* list;
+        Node* current_node;
+
+        void nodeSetNext(SortedList::Node* node);
+    };
+    
+    SortedList::Iterator::Iterator(const SortedList* list) : list(list), current_node(list->first) {}
+
+    SortedList::Iterator& SortedList::Iterator::operator++()
+    {
+        if (current_node == nullptr)
+        {
+            throw std::out_of_range("SortedList iterator is out of bounds");
+        }
+        this->current_node = current_node->getNext();
+        return *this;
+    }
+
+    bool SortedList::Iterator::operator==(SortedList::Iterator iterator) const
+    {
+        assert(this->list == iterator.list);
+        return current_node == iterator.current_node;
+    }
+
+    const T& SortedList::Iterator::operator*()
+    {
+        return this->current_node->getData();
+    }
+
+    void SortedList::Iterator::nodeSetNext(SortedList::Node* node)
+    {
+        this->current_node->setNext(node);
+    }
