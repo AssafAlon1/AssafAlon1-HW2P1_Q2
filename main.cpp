@@ -3,6 +3,7 @@
 #include <iostream>
 
 using std::cout;
+using std::endl;
 using mtm::SortedList;
 
 
@@ -57,6 +58,7 @@ int turnEvensToNegatives(int num)
 
 void listTest1()
 {
+    cout << "Running test1... ";
     SortedList<int> list1 = SortedList<int>();
     //int x = list1.length();
     //cout << x;
@@ -75,17 +77,13 @@ void listTest1()
     list1.insert(10);
 
 
-    int cnt = 0;
-    for (SortedList<int>::const_iterator iterator = list1.begin() ; !(iterator == list1.end()) ; iterator++)
-    {
-        cout << cnt++ ;
-    }
-    cout << std::endl;
-    cout << std::endl;
+    cout << "[OK]" << endl;
 }
 
 void listTest2()
 {
+    cout << "Running test2... ";
+
     // List creation
     SortedList<int> list1 = SortedList<int>();
     list1.insert(1);
@@ -267,12 +265,14 @@ void listTest2()
     assert(*(iter++) == 8);
     assert(*(iter++) == 9);
     assert(iter == list3.end());
-    return;
+    
+    cout << "[OK]" << endl;
 }
 
 
 void listTest3()
 {
+    cout << "Running test3... ";
     SortedList<int> list1 = SortedList<int>();
     
     list1.insert(14);
@@ -322,11 +322,13 @@ void listTest3()
     assert(iter == list2.end());
     assert(list2.length() == 3);
 
+    cout << "[OK]" << endl;
 }
 
 
 void listTest4()
 {
+    cout << "Running test4... ";
     SortedList<int> list1 = SortedList<int>();
     list1.insert(6);
     list1.insert(2);
@@ -407,10 +409,13 @@ void listTest4()
     assert(*(iter++) == 81);
     assert(iter == list2.end());
     assert(list1.length() == 8);
+
+    cout << "[OK]" << endl;
 }
 
 void listTest5()
 {
+    cout << "Running test5... ";
     SortedList<int> list1 = SortedList<int>();
     list1.insert(759);
     list1.insert(285);
@@ -4276,7 +4281,6 @@ void listTest5()
     assert(*(iter4++) == 1002);
     assert(*(iter4++) == 1003);
     assert(iter4 == list4.end());
-
 
 
     assert(*(iter5++) == -6);
@@ -9314,14 +9318,16 @@ void listTest5()
     assert(*(iter9++) == 997);
     assert(*(iter9++) == 999);
     assert(iter9 == list9.end());
+
+    cout << "[OK]" << endl;
 }
 
 int main ()
 {
-    // listTest1();
-    // listTest2();
-    // listTest3();
-    // listTest4();
-    // listTest5();
+    listTest1();
+    listTest2();
+    listTest3();
+    listTest4();
+    listTest5();
     return 0;
 }
