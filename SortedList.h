@@ -5,7 +5,7 @@
 #include <assert.h>
 
 // Assuming class T has:
-// Copy constructor, Destructor, operator<,
+// Copy constructor, Destructor, operator<, 
 #define T int
 
 namespace mtm
@@ -22,7 +22,7 @@ namespace mtm
         void remove(const_iterator iterator);
         int length();
         SortedList filter(bool function(T));          // Make it reference?
-        //SortedList apply(T function(T));
+        SortedList apply(T function(T));
         const_iterator begin();
         const_iterator end();
 
@@ -382,6 +382,15 @@ namespace mtm
         return list;
     }
 
+    SortedList SortedList::apply(T function(T))
+    {
+        SortedList list = SortedList();
+        for (const_iterator iterator = this->begin() ; !(iterator == this->end()) ; ++iterator)
+        {
+            list.insert(function(*iterator));
+        }
+        return list;
+    }
 
     // DELETE BEFORE SUBMITTION
     void printList(const SortedList& list)
