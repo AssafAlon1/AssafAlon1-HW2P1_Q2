@@ -22,8 +22,12 @@ namespace mtm
         void insert(T element);
         void remove(const_iterator iterator);
         int length();
-        SortedList filter(bool function(T));          // Make it reference?
-        SortedList apply(T function(T));
+        
+        template<class S>
+        SortedList filter(bool function(S));          // Make it reference?
+
+        template<class S>
+        SortedList apply(T function(S));              // Make it generic
         const_iterator begin();
         const_iterator end();
 
@@ -388,9 +392,10 @@ namespace mtm
     }
 
     template<class T>
-    SortedList<T> SortedList<T>::filter(bool function(T))
+    template<class S>
+    SortedList<T> SortedList<T>::filter(bool function(S))
     {
-        SortedList<T> list = SortedList();
+        SortedList<T> list = SortedList<T>();
         for (const_iterator iterator = this->begin() ; !(iterator == this->end()) ; ++iterator)
         {
             if (function(*iterator))
@@ -402,7 +407,8 @@ namespace mtm
     }
 
     template<class T>
-    SortedList<T> SortedList<T>::apply(T function(T))
+    template<class S>
+    SortedList<T> SortedList<T>::apply(T function(S))
     {
         SortedList list = SortedList<T>();
         for (const_iterator iterator = this->begin() ; !(iterator == this->end()) ; ++iterator)

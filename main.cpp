@@ -56,6 +56,11 @@ int turnEvensToNegatives(int num)
     return num;
 }
 
+int killYourFamily(std::string melvin)
+{
+    return 1;
+}
+
 void listTest1()
 {
     cout << "Running test1... ";
