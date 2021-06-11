@@ -21,6 +21,31 @@ bool isTreven(int num)
     return !(num % 3);
 }
 
+int addThree(int num)
+{
+    return num + 3;
+}
+
+int subtract3Multiply2(int num)
+{
+    return (num-3)*2;
+}
+
+int zero(int num)
+{
+    return 0;
+}
+
+int multiplyNegative1(int num)
+{
+    return -num;
+}
+
+int square(int num)
+{
+    return num*num;
+}
+
 void listTest1()
 {
     SortedList list1 = SortedList();
@@ -291,10 +316,96 @@ void listTest3()
 
 }
 
+
+// void listTest4()
+// {
+//     SortedList list1 = SortedList();
+//     list1.insert(6);
+//     list1.insert(2);
+//     list1.insert(4);
+//     list1.insert(3);
+//     list1.insert(9);
+//     list1.insert(-3);
+//     list1.insert(1);
+//     list1.insert(-1);
+
+//     SortedList::const_iterator iter = list1.begin();
+//     //*iter = 5;   <-- Verify actually const
+
+//     SortedList list2 = list1.apply(addThree());
+//     iter = list2.begin();
+//     assert(*(iter++) == 0);
+//     assert(*(iter++) == 2);
+//     assert(*(iter++) == 4);
+//     assert(*(iter++) == 5);
+//     assert(*(iter++) == 6);
+//     assert(*(iter++) == 7);
+//     assert(*(iter++) == 9);
+//     assert(*(iter++) == 12);
+//     assert(iter == list1.end());
+//     assert(list1.length() == 8);
+
+
+//     list2 = list1.apply(subtract3Multiply2());
+//     iter = list2.begin();
+//     assert(*(iter++) == -12);
+//     assert(*(iter++) == -8);
+//     assert(*(iter++) == -4);
+//     assert(*(iter++) == -2);
+//     assert(*(iter++) == 0);
+//     assert(*(iter++) == 2);
+//     assert(*(iter++) == 6);
+//     assert(*(iter++) == 12);
+//     assert(iter == list1.end());
+//     assert(list1.length() == 8);
+
+    
+//     list2 = list1.apply(zero());
+//     iter = list2.begin();
+//     assert(*(iter++) == 0);
+//     assert(*(iter++) == 0);
+//     assert(*(iter++) == 0);
+//     assert(*(iter++) == 0);
+//     assert(*(iter++) == 0);
+//     assert(*(iter++) == 0);
+//     assert(*(iter++) == 0);
+//     assert(*(iter++) == 0);
+//     assert(iter == list1.end());
+//     assert(list1.length() == 8);
+
+//     list2 = list1.apply(multiplyNegative1());
+//     iter = list2.begin();
+//     assert(*(iter++) == -9);
+//     assert(*(iter++) == -6);
+//     assert(*(iter++) == -4);
+//     assert(*(iter++) == -3);
+//     assert(*(iter++) == -2);
+//     assert(*(iter++) == -1);
+//     assert(*(iter++) == 1);
+//     assert(*(iter++) == 3);
+//     assert(iter == list1.end());
+//     assert(list1.length() == 8);
+
+
+//     list2 = list1.apply(multiplyNegative1());
+//     iter = list2.begin();
+//     assert(*(iter++) == 1);
+//     assert(*(iter++) == 1);
+//     assert(*(iter++) == 4);
+//     assert(*(iter++) == 9);
+//     assert(*(iter++) == 9);
+//     assert(*(iter++) == 16);
+//     assert(*(iter++) == 36);
+//     assert(*(iter++) == 81);
+//     assert(iter == list1.end());
+//     assert(list1.length() == 8);
+// }
+
 int main ()
 {
     listTest1();
     listTest2();
     listTest3();
+    //listTest4();
     return 0;
 }
