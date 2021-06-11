@@ -38,7 +38,7 @@ using mtm::SortedList;
 void listTest1()
 {
     SortedList list1 = SortedList();
-    int x = list1.length();
+    //int x = list1.length();
     //cout << x;
     list1.insert(0);
     list1.insert(1);
@@ -67,6 +67,7 @@ void listTest1()
 
 void listTest2()
 {
+    // List creation
     SortedList list1 = SortedList();
     list1.insert(1);
     list1.insert(2);
@@ -80,8 +81,131 @@ void listTest2()
     list1.insert(9);
     list1.insert(8);
 
+    // Check insert and iterator
     SortedList::const_iterator iter = list1.begin();
-    assert(*iter == 1);
+    assert(*(iter++) == 1);
+    assert(*(iter++) == 2);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 4);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 8);
+    assert(*(iter++) == 9);
+
+    // Check copy constructor
+    SortedList list2 = list1;
+    iter = list2.begin();
+    assert(*(iter++) == 1);
+    assert(*(iter++) == 2);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 4);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 8);
+    assert(*(iter++) == 9);
+
+    // Check remove function
+    iter = list2.begin();
+    list2.remove(iter);
+    iter = list2.begin();
+
+    assert(*(iter++) == 2);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 4);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 8);
+    assert(*(iter++) == 9);
+
+    // Check remove function again
+    iter = list2.begin();
+    iter++;
+    iter++;
+    iter++;
+    list2.remove(iter);
+    iter = list2.begin();
+
+    assert(*(iter++) == 2);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 4);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 8);
+    assert(*(iter++) == 9);
+
+
+    // Check remove function again
+    iter = list2.begin();
+    iter++; iter++; iter++; iter++; iter++; iter++; iter++;
+    list2.remove(iter);
+    iter = list2.begin();
+
+    assert(*(iter++) == 2);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 4);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 9);
+
+
+    // Check the original list is unchanged
+    iter = list1.begin();
+    assert(*(iter++) == 1);
+    assert(*(iter++) == 2);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 4);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 8);
+    assert(*(iter++) == 9);
+
+    // Check other operator++
+    iter = list1.begin();
+    assert(*(++iter) == 2);
+    assert(*(++iter) == 3);
+    assert(*(++iter) == 3);
+    assert(*(++iter) == 3);
+    assert(*(++iter) == 3);
+    assert(*(++iter) == 4);
+    assert(*(++iter) == 5);
+    assert(*(++iter) == 5);
+    assert(*(++iter) == 8);
+    assert(*(++iter) == 9);
+
+
+    // Check assignment operator
+    SortedList list3;
+    list3 = list2;
+    iter = list3.begin();
+
+    assert(*(iter++) == 2);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 4);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 9);
+
+    list3 = list1;
+    iter = list1.begin();
+    assert(*(iter++) == 1);
     assert(*(iter++) == 2);
     assert(*(iter++) == 3);
     assert(*(iter++) == 3);

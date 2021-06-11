@@ -15,14 +15,14 @@ namespace mtm
     public:
         class const_iterator;
         SortedList();
-        //~SortedList();
-        //SortedList(const SortedList& sorted_list);
+        ~SortedList();
+        SortedList(const SortedList& sorted_list);
         SortedList& operator=(const SortedList& list);
         void insert(T element);
-        //remove
+        void remove(const_iterator iterator);
         int length();
-        //filter
-        //apply
+        SortedList filter(bool function(T));          // Make it reference?
+        //SortedList apply(T function(T));
         const_iterator begin();
         const_iterator end();
 
@@ -39,6 +39,7 @@ namespace mtm
         Node *last;
 
         Node* findPlacement(T element);
+        Node* findPlacement(const_iterator iterator);
     };
 
 
@@ -57,6 +58,7 @@ namespace mtm
         void setNext(Node* node);
         Node* getNext() const;
         const T& getData() const;
+        void destroyNodeList();
         Node* copyNodeList() const;
 
     private:
@@ -87,6 +89,18 @@ namespace mtm
         return this->data;
     }
 
+    void SortedList::Node::destroyNodeList()
+    {
+        Node* next_node = next;
+        while (next_node != nullptr)
+        {
+            Node* temp_node = next_node->next;
+            delete next_node;
+            next_node = temp_node;
+        }
+        delete this;
+    }
+
     SortedList::Node* SortedList::Node::copyNodeList() const
     {
         Node *return_node = new Node(data);
@@ -101,7 +115,7 @@ namespace mtm
                 current_list_iterator = current_list_iterator->next;
                 new_list_iterator     = new_list_iterator->next;
             }
-            catch (std::bad_alloc)
+            catch (std::bad_alloc& err)
             {
                 while (return_node != nullptr)
                 {
@@ -109,6 +123,7 @@ namespace mtm
                     delete return_node;
                     return_node = temp_node;
                 }
+                throw;
             }
         }
 
@@ -130,7 +145,8 @@ namespace mtm
         const_iterator(const const_iterator& iterator) = default;
         ~const_iterator() = default;
         const_iterator& operator=(const const_iterator& iterator) = default;
-        const_iterator& operator++(int);
+        const_iterator& operator++();
+        const_iterator operator++(int);
         bool operator==(const_iterator iterator) const;
         const T& operator*();
     private:
@@ -144,7 +160,7 @@ namespace mtm
     SortedList::const_iterator::const_iterator(const SortedList* list, Node* node) : 
                                 list(list), current_node(node) {}
 
-    SortedList::const_iterator& SortedList::const_iterator::operator++(int)
+    SortedList::const_iterator& SortedList::const_iterator::operator++()
     {
         if (current_node == nullptr)
         {
@@ -152,6 +168,17 @@ namespace mtm
         }
         this->current_node = current_node->getNext();
         return *this;
+    }
+
+    SortedList::const_iterator SortedList::const_iterator::operator++(int)
+    {
+        if (current_node == nullptr)
+        {
+            throw std::out_of_range("SortedList const_iterator is out of bounds");
+        }
+        const_iterator result = *this;
+        this->current_node = current_node->getNext();
+        return result;
     }
 
     bool SortedList::const_iterator::operator==(SortedList::const_iterator iterator) const
@@ -195,12 +222,47 @@ namespace mtm
         return current_node;
     }
 
+    SortedList::Node* SortedList::findPlacement(const_iterator iterator)
+    {
+        if (size == 0 || iterator == this->end() || iterator.current_node == first)
+        {
+            return nullptr;
+        }
+        Node* current_node = first;
+        while (current_node != nullptr && current_node->getNext() != nullptr)
+        {
+            if(iterator.current_node == current_node->getNext())
+            {
+                return current_node;
+            }
+            current_node = current_node->getNext();
+        }
+        return nullptr;
+    }
 
     SortedList::SortedList()
     {
         size   = 0;
         first  = nullptr;
         last   = nullptr;
+    }
+
+    SortedList::~SortedList()
+    {
+        first->destroyNodeList();
+    }
+
+    SortedList::SortedList(const SortedList& sorted_list)
+    {
+        first = sorted_list.first->copyNodeList();
+        size = sorted_list.size;
+
+        SortedList::Node* current_node = first;
+        while (current_node != nullptr && current_node->getNext() != nullptr)
+        {
+            current_node = current_node->getNext();
+        }
+        last = current_node;
     }
 
     void SortedList::insert(T element)
@@ -232,6 +294,27 @@ namespace mtm
             last = new_node;
         }
     }
+    
+    void SortedList::remove(SortedList::const_iterator iterator)
+    {
+        if (iterator == this->end() || size == 0)
+        {
+            return;
+        }
+        SortedList::Node* prev_node = findPlacement(iterator);
+        
+        // Case: the first node should be removed
+        if(prev_node == nullptr)
+        {
+            first = iterator.current_node->getNext();
+            delete iterator.current_node;               // Works?
+            return;
+        }
+        SortedList::Node* current_node = prev_node->getNext();
+        prev_node->setNext(current_node->getNext());
+        delete current_node;
+        size--;
+    }
 
     SortedList& SortedList::operator=(const SortedList& list)
     {
@@ -244,7 +327,13 @@ namespace mtm
         // Copy the nodes to temp var
         Node* coppied_list = list.first->copyNodeList();
         
+        // CAN'T FAIL BEYONG THIS POINT
         // Make list point to the new nodes, update size, return list
+        
+        if (first) // If there were nodes in the list beforehand
+        {
+            first->destroyNodeList();
+        }
         first = coppied_list;
         size  = list.size;
         return *this;
@@ -262,8 +351,27 @@ namespace mtm
 
     SortedList::const_iterator SortedList::end()
     {
+        if (this->last == nullptr)
+        {
+            return SortedList::const_iterator(this, this->last);
+        }
         return SortedList::const_iterator(this, this->last->getNext());
     }
+
+
+    SortedList SortedList::filter(bool function(T))
+    {
+        SortedList list = SortedList();
+        for (const_iterator iterator = this->begin() ; !(iterator == this->end()) ; ++iterator)
+        {
+            if (function(*iterator))
+            {
+                list.insert(*iterator);
+            }
+        }
+        return list;
+    }
+
 
     // DELETE BEFORE SUBMITTION
     void printList(const SortedList& list)
@@ -277,8 +385,6 @@ namespace mtm
         printf("\n");
     }
 }
-
-
 
 
 #endif
