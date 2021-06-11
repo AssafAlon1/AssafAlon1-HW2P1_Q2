@@ -36,7 +36,7 @@ namespace mtm
         
         int size;
         Node *first;
-        Node *last;
+        //Node *last;
 
         Node* findPlacement(T element);
         Node* findPlacement(const_iterator iterator);
@@ -244,7 +244,7 @@ namespace mtm
     {
         size   = 0;
         first  = nullptr;
-        last   = nullptr;
+        //last   = nullptr;
     }
 
     SortedList::~SortedList()
@@ -262,7 +262,7 @@ namespace mtm
         {
             current_node = current_node->getNext();
         }
-        last = current_node;
+        //last = current_node;
     }
 
     void SortedList::insert(T element)
@@ -275,10 +275,10 @@ namespace mtm
         {
             new_node->setNext(first);
             first = new_node;
-            if (last == nullptr)
-            {
-                last = new_node;
-            }
+            // if (last == nullptr)
+            // {
+            //     last = new_node;
+            // }
             size++;
             return;
         }
@@ -289,10 +289,10 @@ namespace mtm
         prev_node->setNext(new_node);
         size++;
 
-        if (last->getNext() == new_node)
-        {
-            last = new_node;
-        }
+        // if (last->getNext() == new_node)
+        // {
+        //     last = new_node;
+        // }
     }
     
     void SortedList::remove(SortedList::const_iterator iterator)
@@ -308,12 +308,22 @@ namespace mtm
         {
             first = iterator.current_node->getNext();
             delete iterator.current_node;               // Works?
+            size--;
             return;
         }
+
         SortedList::Node* current_node = prev_node->getNext();
         prev_node->setNext(current_node->getNext());
         delete current_node;
         size--;
+
+
+        // Case: the last node should be removed
+        // if (prev_node == last)
+        // {
+        //     // Update the
+        //     last = findPlacement(const_iterator(this, last));
+        // }
     }
 
     SortedList& SortedList::operator=(const SortedList& list)
@@ -351,11 +361,11 @@ namespace mtm
 
     SortedList::const_iterator SortedList::end()
     {
-        if (this->last == nullptr)
-        {
-            return SortedList::const_iterator(this, this->last);
-        }
-        return SortedList::const_iterator(this, this->last->getNext());
+        //if (this->last == nullptr)
+        //{
+            return SortedList::const_iterator(this, nullptr);
+        //}
+        //return SortedList::const_iterator(this, this->last->getNext());
     }
 
 

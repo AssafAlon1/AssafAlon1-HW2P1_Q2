@@ -6,34 +6,20 @@ using std::cout;
 using mtm::SortedList;
 
 
-// void nodeTests()
-// {
-//     Node n1 = Node(3);
-//     Node n2 = Node(6);
-//     Node n3 = Node(4);
-//     Node n4 = Node(13);
-//     n1.setNext(&n2);
-//     n2.setNext(&n3);
-//     n3.setNext(&n4);
+bool isEven(int num)
+{
+    return !(num % 2);
+}
 
-//     assert(n1.getData() == 3);
-//     assert(n2.getData() == 6);
-//     assert(n3.getData() == 4);
-//     assert(n4.getData() == 13);
+bool isOdd(int num)
+{
+    return !isEven(num);
+}
 
-//     assert(n1.getNext()->getData() == 6);
-//     assert(n1.getNext()->getData() == 4);
-//     assert(n1.getNext()->getData() == 13);
-
-//     n1.setNext(&n4);
-//     n4.setNext(&n2);
-//     n3.setNext(&n1);
-
-//     assert(n1.getNext()->getData() == 13);
-//     assert(n1.getNext()->getNext()->getData() == 6);
-//     assert(n2.getNext()->getNext()->getNext()->getData() == 4);
-//     assert(n1.getNext()->getNext()->getNext()->getNext()->getData() == 6);
-// }
+bool isTreven(int num)
+{
+    return !(num % 3);
+}
 
 void listTest1()
 {
@@ -94,6 +80,8 @@ void listTest2()
     assert(*(iter++) == 5);
     assert(*(iter++) == 8);
     assert(*(iter++) == 9);
+    assert(iter == list1.end());
+    assert(list1.length() == 11);
 
     // Check copy constructor
     SortedList list2 = list1;
@@ -109,8 +97,10 @@ void listTest2()
     assert(*(iter++) == 5);
     assert(*(iter++) == 8);
     assert(*(iter++) == 9);
+    assert(iter == list2.end());
+    assert(list2.length() == 11);
 
-    // Check remove function
+    // Check remove function - delete from start
     iter = list2.begin();
     list2.remove(iter);
     iter = list2.begin();
@@ -125,8 +115,10 @@ void listTest2()
     assert(*(iter++) == 5);
     assert(*(iter++) == 8);
     assert(*(iter++) == 9);
+    assert(iter == list2.end());
+    assert(list2.length() == 10);
 
-    // Check remove function again
+    // Check remove function - delete from mid
     iter = list2.begin();
     iter++;
     iter++;
@@ -143,9 +135,11 @@ void listTest2()
     assert(*(iter++) == 5);
     assert(*(iter++) == 8);
     assert(*(iter++) == 9);
+    assert(iter == list2.end());
+    assert(list2.length() == 9);
 
 
-    // Check remove function again
+    // Check remove function - delete from mid
     iter = list2.begin();
     iter++; iter++; iter++; iter++; iter++; iter++; iter++;
     list2.remove(iter);
@@ -159,6 +153,25 @@ void listTest2()
     assert(*(iter++) == 5);
     assert(*(iter++) == 5);
     assert(*(iter++) == 9);
+    assert(iter == list2.end());
+    assert(list2.length() == 8);
+
+
+    // Check remove function - delete from end
+    iter = list2.begin();
+    iter++; iter++; iter++; iter++; iter++; iter++; iter++;
+    list2.remove(iter);
+    iter = list2.begin();
+
+    assert(*(iter++) == 2);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 4);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 5);
+    assert(iter == list2.end());
+    assert(list2.length() == 7);
 
 
     // Check the original list is unchanged
@@ -174,6 +187,7 @@ void listTest2()
     assert(*(iter++) == 5);
     assert(*(iter++) == 8);
     assert(*(iter++) == 9);
+    assert(iter == list1.end());
 
     // Check other operator++
     iter = list1.begin();
@@ -187,7 +201,7 @@ void listTest2()
     assert(*(++iter) == 5);
     assert(*(++iter) == 8);
     assert(*(++iter) == 9);
-
+    assert(++iter == list1.end());
 
     // Check assignment operator
     SortedList list3;
@@ -201,10 +215,13 @@ void listTest2()
     assert(*(iter++) == 4);
     assert(*(iter++) == 5);
     assert(*(iter++) == 5);
-    assert(*(iter++) == 9);
+    assert(iter == list3.end());
+
+    try { iter++; }
+    catch(std::out_of_range& err) {}
 
     list3 = list1;
-    iter = list1.begin();
+    iter = list3.begin();
     assert(*(iter++) == 1);
     assert(*(iter++) == 2);
     assert(*(iter++) == 3);
@@ -216,12 +233,68 @@ void listTest2()
     assert(*(iter++) == 5);
     assert(*(iter++) == 8);
     assert(*(iter++) == 9);
+    assert(iter == list3.end());
     return;
+}
+
+
+void listTest3()
+{
+    SortedList list1 = SortedList();
+    
+    list1.insert(14);
+    list1.insert(18);
+    list1.insert(62);
+    list1.insert(47);
+    list1.insert(31);
+    list1.insert(59);
+    list1.insert(96);
+    list1.insert(69);
+
+    SortedList::const_iterator iter = list1.begin();
+    assert(*(iter++) == 14);
+    assert(*(iter++) == 18);
+    assert(*(iter++) == 31);
+    assert(*(iter++) == 47);
+    assert(*(iter++) == 59);
+    assert(*(iter++) == 62);
+    assert(*(iter++) == 69);
+    assert(*(iter++) == 96);
+    assert(iter == list1.end());
+    assert(list1.length() == 8);
+
+    SortedList list2 = list1.filter(isEven);
+    iter = list2.begin();
+    assert(*(iter++) == 14);
+    assert(*(iter++) == 18);
+    assert(*(iter++) == 62);
+    assert(*(iter++) == 96);
+    assert(iter == list2.end());
+    assert(list2.length() == 4);
+
+    list2 = list1.filter(isOdd);
+    iter = list2.begin();
+    assert(*(iter++) == 31);
+    assert(*(iter++) == 47);
+    assert(*(iter++) == 59);
+    assert(*(iter++) == 69);
+    assert(iter == list2.end());
+    assert(list2.length() == 4);
+
+    list2 = list1.filter(isTreven);
+    iter = list2.begin();
+    assert(*(iter++) == 18);
+    assert(*(iter++) == 69);
+    assert(*(iter++) == 96);
+    assert(iter == list2.end());
+    assert(list2.length() == 3);
+
 }
 
 int main ()
 {
     listTest1();
     listTest2();
+    listTest3();
     return 0;
 }
