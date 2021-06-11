@@ -6,10 +6,11 @@
 
 // Assuming class T has:
 // Copy constructor, Destructor, operator<, 
-#define T int
+//#define T int
 
 namespace mtm
 {
+    template<class T>
     class SortedList
     {
     public:
@@ -25,11 +26,6 @@ namespace mtm
         SortedList apply(T function(T));
         const_iterator begin();
         const_iterator end();
-
-        
-
-        // REMOVE BEFORE SUBMITTION
-        friend void printList(const SortedList& list);
 
     private:
         class Node;
@@ -47,7 +43,8 @@ namespace mtm
 
 
 
-    class SortedList::Node
+    template<class T>
+    class SortedList<T>::Node
     {
     public:
         Node(T element);
@@ -63,7 +60,7 @@ namespace mtm
 
     private:
         T data;
-        SortedList::Node *next;
+        SortedList<T>::Node *next;
     };
 
 
@@ -72,24 +69,29 @@ namespace mtm
     //=========================================
     //========== Node implementation ==========
     //=========================================
-    SortedList::Node::Node(T element) : data(T(element)), next(nullptr){}
+    template<class T>
+    SortedList<T>::Node::Node(T element) : data(T(element)), next(nullptr){}
 
-    void SortedList::Node::setNext(SortedList::Node* node)
+    template<class T>
+    void SortedList<T>::Node::setNext(SortedList<T>::Node* node)
     {
         this->next = node;
     }
 
-    SortedList::Node* SortedList::Node::getNext() const
+    template<class T>
+    typename SortedList<T>::Node* SortedList<T>::Node::getNext() const
     {
         return this->next;
     }
 
-    const T& SortedList::Node::getData() const
+    template<class T>
+    const T& SortedList<T>::Node::getData() const
     {
         return this->data;
     }
 
-    void SortedList::Node::destroyNodeList()
+    template<class T>
+    void SortedList<T>::Node::destroyNodeList()
     {
         Node* next_node = next;
         while (next_node != nullptr)
@@ -101,7 +103,8 @@ namespace mtm
         delete this;
     }
 
-    SortedList::Node* SortedList::Node::copyNodeList() const
+    template<class T>
+    typename SortedList<T>::Node* SortedList<T>::Node::copyNodeList() const
     {
         Node *return_node = new Node(data);
         Node *current_list_iterator = next;
@@ -137,8 +140,8 @@ namespace mtm
     //=========================================
     //======== iterator implementation ========
     //=========================================
-
-    class SortedList::const_iterator
+    template<class T>
+    class SortedList<T>::const_iterator
     {
     public:
         
@@ -157,10 +160,12 @@ namespace mtm
 
     };
     
-    SortedList::const_iterator::const_iterator(const SortedList* list, Node* node) : 
+    template<class T>
+    SortedList<T>::const_iterator::const_iterator(const SortedList<T>* list, Node* node) : 
                                 list(list), current_node(node) {}
 
-    SortedList::const_iterator& SortedList::const_iterator::operator++()
+    template<class T>
+    typename SortedList<T>::const_iterator& SortedList<T>::const_iterator::operator++()
     {
         if (current_node == nullptr)
         {
@@ -170,7 +175,8 @@ namespace mtm
         return *this;
     }
 
-    SortedList::const_iterator SortedList::const_iterator::operator++(int)
+    template<class T>
+    typename SortedList<T>::const_iterator SortedList<T>::const_iterator::operator++(int)
     {
         if (current_node == nullptr)
         {
@@ -181,13 +187,15 @@ namespace mtm
         return result;
     }
 
-    bool SortedList::const_iterator::operator==(SortedList::const_iterator iterator) const
+    template<class T>
+    bool SortedList<T>::const_iterator::operator==(SortedList<T>::const_iterator iterator) const
     {
         assert(this->list == iterator.list);
         return current_node == iterator.current_node;
     }
 
-    const T& SortedList::const_iterator::operator*()
+    template<class T>
+    const T& SortedList<T>::const_iterator::operator*()
     {
         return this->current_node->getData();
     }
@@ -205,7 +213,8 @@ namespace mtm
 
     // Returns nullptr if the list is currently empty OR the placement is the first node
     // Otherwise returns the node that should be placed before a new node containing element in the list
-    SortedList::Node* SortedList::findPlacement(T element)
+    template<class T>
+    typename SortedList<T>::Node* SortedList<T>::findPlacement(T element)
     {
         if (size == 0 || element < first->getData())
         {
@@ -222,7 +231,8 @@ namespace mtm
         return current_node;
     }
 
-    SortedList::Node* SortedList::findPlacement(const_iterator iterator)
+    template<class T>
+    typename SortedList<T>::Node* SortedList<T>::findPlacement(const_iterator iterator)
     {
         if (size == 0 || iterator == this->end() || iterator.current_node == first)
         {
@@ -240,19 +250,22 @@ namespace mtm
         return nullptr;
     }
 
-    SortedList::SortedList()
+    template<class T>
+    SortedList<T>::SortedList()
     {
         size   = 0;
         first  = nullptr;
         //last   = nullptr;
     }
 
-    SortedList::~SortedList()
+    template<class T>
+    SortedList<T>::~SortedList()
     {
         first->destroyNodeList();
     }
 
-    SortedList::SortedList(const SortedList& sorted_list)
+    template<class T>
+    SortedList<T>::SortedList(const SortedList& sorted_list)
     {
         first = sorted_list.first->copyNodeList();
         size = sorted_list.size;
@@ -265,7 +278,8 @@ namespace mtm
         //last = current_node;
     }
 
-    void SortedList::insert(T element)
+    template<class T>
+    void SortedList<T>::insert(T element)
     {
         Node *new_node = new Node(element);
 
@@ -295,7 +309,8 @@ namespace mtm
         // }
     }
     
-    void SortedList::remove(SortedList::const_iterator iterator)
+    template<class T>
+    void SortedList<T>::remove(SortedList<T>::const_iterator iterator)
     {
         if (iterator == this->end() || size == 0)
         {
@@ -326,7 +341,8 @@ namespace mtm
         // }
     }
 
-    SortedList& SortedList::operator=(const SortedList& list)
+    template<class T>
+    SortedList<T>& SortedList<T>::operator=(const SortedList<T>& list)
     {
         // Self assignment handling
         if (this == &list)
@@ -349,29 +365,32 @@ namespace mtm
         return *this;
     }
 
-    int SortedList::length()
+    template<class T>
+    int SortedList<T>::length()
     {
         return this->size;
     }
 
-    SortedList::const_iterator SortedList::begin()
+    template<class T>
+    typename SortedList<T>::const_iterator SortedList<T>::begin()
     {
         return SortedList::const_iterator(this, this->first);
     }
 
-    SortedList::const_iterator SortedList::end()
+    template<class T>
+    typename SortedList<T>::const_iterator SortedList<T>::end()
     {
         //if (this->last == nullptr)
         //{
-            return SortedList::const_iterator(this, nullptr);
+            return SortedList<T>::const_iterator(this, nullptr);
         //}
         //return SortedList::const_iterator(this, this->last->getNext());
     }
 
-
-    SortedList SortedList::filter(bool function(T))
+    template<class T>
+    SortedList<T> SortedList<T>::filter(bool function(T))
     {
-        SortedList list = SortedList();
+        SortedList<T> list = SortedList();
         for (const_iterator iterator = this->begin() ; !(iterator == this->end()) ; ++iterator)
         {
             if (function(*iterator))
@@ -382,26 +401,15 @@ namespace mtm
         return list;
     }
 
-    SortedList SortedList::apply(T function(T))
+    template<class T>
+    SortedList<T> SortedList<T>::apply(T function(T))
     {
-        SortedList list = SortedList();
+        SortedList list = SortedList<T>();
         for (const_iterator iterator = this->begin() ; !(iterator == this->end()) ; ++iterator)
         {
             list.insert(function(*iterator));
         }
         return list;
-    }
-
-    // DELETE BEFORE SUBMITTION
-    void printList(const SortedList& list)
-    {
-        SortedList::Node* node = list.first;
-        while (node != nullptr)
-        {
-            printf("%d, ",node->getData());
-            node = node->getNext();
-        }
-        printf("\n");
     }
 }
 

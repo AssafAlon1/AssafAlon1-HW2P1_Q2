@@ -57,7 +57,7 @@ int turnEvensToNegatives(int num)
 
 void listTest1()
 {
-    SortedList list1 = SortedList();
+    SortedList<int> list1 = SortedList<int>();
     //int x = list1.length();
     //cout << x;
     list1.insert(0);
@@ -76,19 +76,18 @@ void listTest1()
 
 
     int cnt = 0;
-    for (SortedList::const_iterator iterator = list1.begin() ; !(iterator == list1.end()) ; iterator++)
+    for (SortedList<int>::const_iterator iterator = list1.begin() ; !(iterator == list1.end()) ; iterator++)
     {
         cout << cnt++ ;
     }
     cout << std::endl;
-    mtm::printList(list1);
     cout << std::endl;
 }
 
 void listTest2()
 {
     // List creation
-    SortedList list1 = SortedList();
+    SortedList<int> list1 = SortedList<int>();
     list1.insert(1);
     list1.insert(2);
     list1.insert(5);
@@ -102,7 +101,7 @@ void listTest2()
     list1.insert(8);
 
     // Check insert and iterator
-    SortedList::const_iterator iter = list1.begin();
+    SortedList<int>::const_iterator iter = list1.begin();
     assert(*(iter++) == 1);
     assert(*(iter++) == 2);
     assert(*(iter++) == 3);
@@ -118,7 +117,7 @@ void listTest2()
     assert(list1.length() == 11);
 
     // Check copy constructor
-    SortedList list2 = list1;
+    SortedList<int> list2 = list1;
     iter = list2.begin();
     assert(*(iter++) == 1);
     assert(*(iter++) == 2);
@@ -238,7 +237,7 @@ void listTest2()
     assert(++iter == list1.end());
 
     // Check assignment operator
-    SortedList list3;
+    SortedList<int> list3;
     list3 = list2;
     iter = list3.begin();
 
@@ -274,7 +273,7 @@ void listTest2()
 
 void listTest3()
 {
-    SortedList list1 = SortedList();
+    SortedList<int> list1 = SortedList<int>();
     
     list1.insert(14);
     list1.insert(18);
@@ -285,7 +284,7 @@ void listTest3()
     list1.insert(96);
     list1.insert(69);
 
-    SortedList::const_iterator iter = list1.begin();
+    SortedList<int>::const_iterator iter = list1.begin();
     assert(*(iter++) == 14);
     assert(*(iter++) == 18);
     assert(*(iter++) == 31);
@@ -297,7 +296,7 @@ void listTest3()
     assert(iter == list1.end());
     assert(list1.length() == 8);
 
-    SortedList list2 = list1.filter(isEven);
+    SortedList<int> list2 = list1.filter(isEven);
     iter = list2.begin();
     assert(*(iter++) == 14);
     assert(*(iter++) == 18);
@@ -328,7 +327,7 @@ void listTest3()
 
 void listTest4()
 {
-    SortedList list1 = SortedList();
+    SortedList<int> list1 = SortedList<int>();
     list1.insert(6);
     list1.insert(2);
     list1.insert(4);
@@ -338,10 +337,10 @@ void listTest4()
     list1.insert(1);
     list1.insert(-1);
 
-    SortedList::const_iterator iter = list1.begin();
+    SortedList<int>::const_iterator iter = list1.begin();
     //*iter = 5;   <-- Verify actually const
 
-    SortedList list2 = list1.apply(addThree);
+    SortedList<int> list2 = list1.apply(addThree);
     iter = list2.begin();
     assert(*(iter++) == 0);
     assert(*(iter++) == 2);
@@ -412,8 +411,8 @@ void listTest4()
 
 void listTest5()
 {
-    SortedList list1 = SortedList();
-        list1.insert(759);
+    SortedList<int> list1 = SortedList<int>();
+    list1.insert(759);
     list1.insert(285);
     list1.insert(781);
     list1.insert(697);
@@ -1415,7 +1414,7 @@ void listTest5()
     list1.insert(111);
     list1.insert(966);
 
-    SortedList::const_iterator iter = list1.begin();
+    SortedList<int>::const_iterator iter = list1.begin();
     assert(*(iter++) == 0);
     assert(*(iter++) == 1);
     assert(*(iter++) == 2);
@@ -2419,7 +2418,7 @@ void listTest5()
     assert(*(iter++) == 1000);
     assert(iter == list1.end());
 
-    SortedList list2 = list1.filter(isEven);
+    SortedList<int> list2 = list1.filter(isEven);
     iter = list2.begin();
     assert(*(iter++) == 0);
     assert(*(iter++) == 2);
@@ -2923,7 +2922,7 @@ void listTest5()
     assert(*(iter++) == 998);
     assert(*(iter++) == 1000);
 
-    SortedList list3 = list1.filter(isTreven);
+    SortedList<int> list3 = list1.filter(isTreven);
     iter = list3.begin();
     assert(*(iter++) == 0);
     assert(*(iter++) == 3);
@@ -3262,18 +3261,18 @@ void listTest5()
     assert(iter == list3.end());
 
 
-    SortedList list4 = list1.apply(addThree);
-    SortedList list5 = list1.apply(subtract3Multiply2);
-    SortedList list6 = list1.apply(zero);
-    SortedList list7 = list1.apply(multiplyNegative1);
-    SortedList list8 = list1.apply(square);
-    SortedList list9 = list1.apply(turnEvensToNegatives);
-    SortedList::const_iterator iter4 = list4.begin();
-    SortedList::const_iterator iter5 = list5.begin();
-    SortedList::const_iterator iter6 = list6.begin();
-    SortedList::const_iterator iter7 = list7.begin();
-    SortedList::const_iterator iter8 = list8.begin();
-    SortedList::const_iterator iter9 = list9.begin();
+    SortedList<int> list4 = list1.apply(addThree);
+    SortedList<int> list5 = list1.apply(subtract3Multiply2);
+    SortedList<int> list6 = list1.apply(zero);
+    SortedList<int> list7 = list1.apply(multiplyNegative1);
+    SortedList<int> list8 = list1.apply(square);
+    SortedList<int> list9 = list1.apply(turnEvensToNegatives);
+    SortedList<int>::const_iterator iter4 = list4.begin();
+    SortedList<int>::const_iterator iter5 = list5.begin();
+    SortedList<int>::const_iterator iter6 = list6.begin();
+    SortedList<int>::const_iterator iter7 = list7.begin();
+    SortedList<int>::const_iterator iter8 = list8.begin();
+    SortedList<int>::const_iterator iter9 = list9.begin();
 
     assert(*(iter4++) == 3);
     assert(*(iter4++) == 4);
