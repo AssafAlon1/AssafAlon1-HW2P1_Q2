@@ -1,10 +1,12 @@
 #include "SortedList.h"
 #include <assert.h>
 #include <iostream>
+#include "testClass.h"
 
 using std::cout;
 using std::endl;
 using mtm::SortedList;
+using mtm::TestClass;
 
 
 bool isEven(int num)
@@ -56,14 +58,16 @@ int turnEvensToNegatives(int num)
     return num;
 }
 
-int killYourFamily(std::string melvin)
+double Polynomial(int num)
 {
-    return 1;
+    return num*(num-8);
 }
+
+
 
 void listTest1()
 {
-    cout << "Running test1... ";
+    cout << "Running test1 - basics1... ";
     SortedList<int> list1 = SortedList<int>();
     //int x = list1.length();
     //cout << x;
@@ -87,7 +91,7 @@ void listTest1()
 
 void listTest2()
 {
-    cout << "Running test2... ";
+    cout << "Running test2 - basics2... ";
 
     // List creation
     SortedList<int> list1 = SortedList<int>();
@@ -274,10 +278,9 @@ void listTest2()
     cout << "[OK]" << endl;
 }
 
-
 void listTest3()
 {
-    cout << "Running test3... ";
+    cout << "Running test3 - filter...  ";
     SortedList<int> list1 = SortedList<int>();
     
     list1.insert(14);
@@ -330,10 +333,9 @@ void listTest3()
     cout << "[OK]" << endl;
 }
 
-
 void listTest4()
 {
-    cout << "Running test4... ";
+    cout << "Running test4 - apply...   ";
     SortedList<int> list1 = SortedList<int>();
     list1.insert(6);
     list1.insert(2);
@@ -420,7 +422,7 @@ void listTest4()
 
 void listTest5()
 {
-    cout << "Running test5... ";
+    cout << "Running test5 - massive... ";
     SortedList<int> list1 = SortedList<int>();
     list1.insert(759);
     list1.insert(285);
@@ -2427,6 +2429,7 @@ void listTest5()
     assert(*(iter++) == 999);
     assert(*(iter++) == 1000);
     assert(iter == list1.end());
+    assert(list1.length() == 1001);
 
     SortedList<int> list2 = list1.filter(isEven);
     iter = list2.begin();
@@ -2931,6 +2934,7 @@ void listTest5()
     assert(*(iter++) == 996);
     assert(*(iter++) == 998);
     assert(*(iter++) == 1000);
+    assert(list2.length() == 501);
 
     SortedList<int> list3 = list1.filter(isTreven);
     iter = list3.begin();
@@ -3269,7 +3273,7 @@ void listTest5()
     assert(*(iter++) == 996);
     assert(*(iter++) == 999);
     assert(iter == list3.end());
-
+    assert(list3.length() == 334);
 
     SortedList<int> list4 = list1.apply(addThree);
     SortedList<int> list5 = list1.apply(subtract3Multiply2);
@@ -4286,7 +4290,7 @@ void listTest5()
     assert(*(iter4++) == 1002);
     assert(*(iter4++) == 1003);
     assert(iter4 == list4.end());
-
+    assert(list4.length() == 1001);
 
     assert(*(iter5++) == -6);
     assert(*(iter5++) == -4);
@@ -5290,7 +5294,7 @@ void listTest5()
     assert(*(iter5++) == 1992);
     assert(*(iter5++) == 1994);
     assert(iter5 == list5.end());
-
+    assert(list5.length() == 1001);
 
 
 
@@ -6298,7 +6302,7 @@ void listTest5()
     assert(*(iter6++) == 0);
     assert(*(iter6++) == 0);
     assert(iter6 == list6.end());
-
+    assert(list6.length() == 1001);
 
 
 
@@ -7307,7 +7311,7 @@ void listTest5()
     assert(*(iter7++) == -1);
     assert(*(iter7++) == 0);
     assert(iter7 == list7.end());
-
+    assert(list7.length() == 1001);
 
 
 
@@ -8318,7 +8322,7 @@ void listTest5()
     assert(*(iter8++) == 998001);
     assert(*(iter8++) == 1000000);
     assert(iter8 == list8.end());
-
+    assert(list7.length() == 1001);
 
 
     assert(*(iter9++) == -1000);
@@ -9323,6 +9327,78 @@ void listTest5()
     assert(*(iter9++) == 997);
     assert(*(iter9++) == 999);
     assert(iter9 == list9.end());
+    assert(list7.length() == 1001);
+
+    cout << "[OK]" << endl;
+}
+
+void listTest6()
+{
+    cout << "Running test6 - double...  ";
+
+    SortedList<double> list1 = SortedList<double>();
+
+    list1.insert(5.5);
+    list1.insert(3.15);
+    list1.insert(15.0);
+    list1.insert(0);
+    list1.insert(8.0);
+    list1.insert(-3.2);
+
+    SortedList<double>::const_iterator iter = list1.begin();
+    
+    assert(*(iter++) == -3.2);
+    assert(*(iter++) == 0);
+    assert(*(iter++) == 3.15);
+    assert(*(iter++) == 5.5);
+    assert(*(iter++) == 8.0);
+    assert(*(iter++) == 15.0);
+    assert(iter == list1.end());
+
+    SortedList<double> list2 = list1.apply(Polynomial);
+    iter = list2.begin();
+    
+
+    cout << "[OK]" << endl;
+}
+
+void listTest8()
+{
+    cout << "Running test8 - custom...  ";
+
+    SortedList<TestClass> list1 = SortedList<TestClass>();
+
+    TestClass c1 = TestClass(1, 2.5);
+    TestClass c2 = TestClass(2, 2.5);
+    TestClass c3 = TestClass(3, 2.5);
+    TestClass c4 = TestClass(1, 2.2);
+    TestClass c5 = TestClass(1, 645);
+
+    list1.insert(c1);
+    list1.insert(c2);
+    list1.insert(c3);
+    list1.insert(c4);
+    list1.insert(c5);
+
+    SortedList<TestClass>::const_iterator iter = list1.begin();
+    assert(externalEqualVerification(*(iter++), c4));
+    assert(externalEqualVerification(*(iter++), c1));
+    assert(externalEqualVerification(*(iter++), c5));
+    assert(externalEqualVerification(*(iter++), c2));
+    assert(externalEqualVerification(*(iter++), c3));
+    assert(iter == list1.end());
+    assert(list1.length() == 5);
+
+    SortedList<TestClass> list2 = list1;
+    iter = list2.begin();
+    assert(externalEqualVerification(*(iter++), c4));
+    assert(externalEqualVerification(*(iter++), c1));
+    assert(externalEqualVerification(*(iter++), c5));
+    assert(externalEqualVerification(*(iter++), c2));
+    assert(externalEqualVerification(*(iter++), c3));
+    assert(iter == list2.end());
+    assert(list2.length() == 5);
+
 
     cout << "[OK]" << endl;
 }
@@ -9334,5 +9410,7 @@ int main ()
     listTest3();
     listTest4();
     listTest5();
+    listTest6();
+    listTest8();
     return 0;
 }
