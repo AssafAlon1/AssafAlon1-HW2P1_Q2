@@ -288,6 +288,51 @@ void listTest2()
     assert(*(iter++) == 9);
     assert(iter == list3.end());
     
+    list3 = SortedList<int>();
+    SortedList<int> list4 = list3;
+    assert(list3.length() == 0);
+    assert(list4.length() == 0);
+    iter = list3.begin();
+    assert(iter == list3.end());
+
+    list4 = list1;
+    list4 = list4;
+    list4 = list4;
+    list4 = list4;
+    iter = list4.begin();
+    assert(*(iter++) == 1);
+    assert(*(iter++) == 2);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 4);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 8);
+    assert(*(iter++) == 9);
+    assert(iter == list4.end());
+    assert(list4.length() == 11);
+
+
+    list1 = list1;
+    list1 = list1;
+    list1 = list1;
+    list1 = list1;
+    iter = list1.begin();
+    assert(*(iter++) == 1);
+    assert(*(iter++) == 2);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 3);
+    assert(*(iter++) == 4);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 5);
+    assert(*(iter++) == 8);
+    assert(*(iter++) == 9);
+    assert(iter == list1.end());
+    assert(list1.length() == 11);
     cout << "[OK]" << endl;
 }
 

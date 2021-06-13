@@ -98,6 +98,12 @@ namespace mtm
     template<class T>
     void SortedList<T>::Node::destroyNodeList()
     {
+        // In case the given Node is nullptr
+        if (this == nullptr)
+        {
+            return;
+        }
+
         Node* next_node = next;
         while (next_node != nullptr)
         {
@@ -112,6 +118,11 @@ namespace mtm
     template<class T>
     typename SortedList<T>::Node* SortedList<T>::Node::copyNodeList() const
     {
+        // In case of no node list
+        if (this == nullptr)
+        {
+            return nullptr;
+        }
         // Declare variables
         Node *return_node = new Node(data);
         Node *current_list_iterator = next;
