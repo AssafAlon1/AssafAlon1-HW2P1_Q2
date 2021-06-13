@@ -205,7 +205,7 @@ namespace mtm
     template<class T>
     bool SortedList<T>::const_iterator::operator==(SortedList<T>::const_iterator iterator) const
     {
-        assert(this->list == iterator.list);
+        //assert(this->list == iterator.list);
         return current_node == iterator.current_node;
     }
 

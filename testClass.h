@@ -9,10 +9,15 @@ namespace mtm
     class TestClass
     {
     private:
-        int x;
+        //int x;
         double y;
-    public:
+
         TestClass(int x, double y);
+        
+    public:
+        int x;
+        TestClass(const TestClass& test_class) = default;
+        friend TestClass externalConstructor(int x, double y);
         ~TestClass() = default;
         bool operator<(const TestClass& test) const;
         void print() const;
@@ -54,6 +59,12 @@ namespace mtm
         }
         return false;
     }
+
+    TestClass externalConstructor(int x, double y)
+    {
+        return TestClass(x, y);
+    }
+
 }
 
 
