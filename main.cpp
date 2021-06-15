@@ -11786,7 +11786,62 @@ void listTest10()
     cout << "[OK]" << endl;
 }
 
+void listTest11()
+{   
+    cout << "Running test11- extra1... ";
+    SortedList<int> list1 = SortedList<int>();
+    SortedList<int> list2 = SortedList<int>();
 
+    try { list1.remove(list1.begin()); }
+    catch (std::out_of_range& e) {}
+    assert(list1.length() == 0);
+    list1.insert(15);
+    assert(list1.length() == 1);
+    list1.remove(list1.begin());
+    assert(list1.length() == 0);
+    try { list1.remove(list1.begin()); }
+    catch (std::out_of_range& e) {}
+    assert(list1.length() == 0);
+
+    list1.insert(7);
+    list1.insert(3);
+    list1.insert(4);
+    list1.insert(1);
+    list1.insert(6);
+    list1.insert(2);
+    list1.insert(5);
+    
+    SortedList<int>::const_iterator iter = list1.begin();
+    assert(*iter == 1);
+    list1.remove(iter);
+    iter = list1.begin();
+    assert(*iter == 2);
+    list1.remove(iter);
+    iter = list1.begin();
+    assert(*iter == 3);
+    list1.remove(iter);
+    assert(list1.length() == 4);
+    iter = list1.begin();
+    assert(*iter == 4);
+    list1.remove(iter);
+    assert(list1.length() == 3);
+    iter = list1.begin();
+    assert(*iter == 5);
+    list1.remove(iter);
+    assert(list1.length() == 2);
+    iter = list1.begin();
+    assert(*iter == 6);
+    list1.remove(iter);
+    assert(list1.length() == 1);
+    iter = list1.begin();
+    assert(*iter == 7);
+    list1.remove(iter);
+    assert(list1.length() == 0);
+    try { list1.remove(list1.begin()); }
+    catch (std::out_of_range& e) {}
+    assert(list1.length() == 0);
+    cout << " [OK]" << endl;
+}
 int main ()
 {
     listTest1();
@@ -11799,5 +11854,6 @@ int main ()
     listTest8();
     listTest9();
     listTest10();
+    listTest11();
     return 0;
 }
